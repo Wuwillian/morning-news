@@ -1,0 +1,22 @@
+name: 政经要闻早报
+
+on:
+  schedule:
+    - cron: '45 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  morning-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - run: pip install requests duckduckgo
+      
+      - run: python main.py
+        env:
+          SEND_KEY: ${{ secrets.SEND_KEY }}
